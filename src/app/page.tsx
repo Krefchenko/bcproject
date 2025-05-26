@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 
-const router = useRouter();
+
 
 export default function ConnectPage() {
+    const router = useRouter();
     const [storeHash, setStoreHash] = useState('');
     const [accessToken, setAccessToken] = useState('');
     const [connectionStatus, setConnectionStatus] = useState<'idle' | 'success' | 'error'>('idle');
