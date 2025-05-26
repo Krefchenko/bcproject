@@ -1,4 +1,3 @@
-'use client';
 import { cookies } from 'next/headers';
 
 export default async function DashboardPage() {
@@ -11,7 +10,7 @@ export default async function DashboardPage() {
     return (
       <div>
         <h1>Not Connected</h1>
-        <p>Missing credentials. Please go back and connect first.</p>
+        <p>Missing credentials, please go back and reconnect</p>
       </div>
     );
   }
