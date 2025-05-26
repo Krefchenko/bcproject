@@ -15,12 +15,20 @@ export async function POST(request: NextRequest) {
     });
 
     // connectionTest.ok is a Response object property, if HTTP status is between 200 and 299 it reads true
+    // if the connection is not ok, return a 401 and set success to false, if there is no connection, return a 500
+    // if the connection is good, put the credentials in cookies to use later
     
-    if (connectionTest.ok) {
-      return NextResponse.json({ success: true });
-    } else {
+    if (!connectionTest.ok) {
       return NextResponse.json({ success: false }, { status: 401 });
     }
+
+    const response = NextResponse.json({ success: true });
+
+    response.cookies.set('storeHash', storeHash, { httpOnly: true });
+    response.cookies.set('accessToken', accessToken, { httpOnly: true });
+    
+    return response;
+
   } catch (error) {
     // console.log will apparently get logged in vercel function logs
     console.error('API error:', error);

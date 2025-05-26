@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+
+const router = useRouter();
 
 export default function ConnectPage() {
     const [storeHash, setStoreHash] = useState('');
@@ -9,7 +12,6 @@ export default function ConnectPage() {
 
     const handleConnect = async () => {
         // try making the connection, throw error if connection fails, eg. due to incorrect creds
-        
         try {
             const response: Response = await fetch('/api/connect', {
                 method: 'POST',
@@ -20,10 +22,15 @@ export default function ConnectPage() {
             });
 
             // we have made a call to our backend at /api/connect and receive the response here
+            // move to the dashboard if we get a success = true back
             const data = await response.json()
 
                 if (data.success) {
                     setConnectionStatus('success');
+                    // just want to wait a second before redirecting to give the success text a chance to pop up
+                    setTimeout(() => {
+                        router.push('/dashboard');
+                    }, 1000)
                 } else {
                     setConnectionStatus('error');
                 } 
@@ -51,7 +58,7 @@ export default function ConnectPage() {
             <label htmlFor="access-token">Access Token:</label>
             <input
             id="access-token"
-            type="password"
+            type="text"
             value={accessToken}
             onChange={(e) => setAccessToken(e.target.value)}
             />
