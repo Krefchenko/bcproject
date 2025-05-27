@@ -6,7 +6,7 @@ export default async function DashboardPage() {
   // using !.value to assert that these are not undefined to make typescript happy
   const storeHash = cookieStore.get('storeHash')!.value;
   const accessToken = cookieStore.get('accessToken')!.value;
-  var storeName = "";
+  let storeName = "";
 
   // Fetch store info
   const storeInfoCall = await fetch(`https://api.bigcommerce.com/stores/${storeHash}/v2/store`, {
