@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     storeName = "Failed to fetch store info"
   }else {
     const storeData = await storeInfoCall.json();
-    storeName = storeData.store_name;
+    storeName = storeData.name;
   }
 
 
