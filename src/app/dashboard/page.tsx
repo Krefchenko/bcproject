@@ -1,25 +1,28 @@
 import { cookies } from 'next/headers';
+import DashboardClient from './client';
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
+  // using !.value to assert that these are not undefined to make typescript happy
+  const storeHash = cookieStore.get('storeHash')!.value;
+  const accessToken = cookieStore.get('accessToken')!.value;
+  var storeName = "";
 
-  const storeHash = cookieStore.get('storeHash')?.value;
-  const accessToken = cookieStore.get('accessToken')?.value;
+  // Fetch store info
+  const storeInfoCall = await fetch(`https://api.bigcommerce.com/stores/${storeHash}/v2/store`, {
+    headers: {
+      'X-Auth-Token': accessToken,
+      'Accept': 'application/json',
+    }
+  });
 
-  if (!storeHash || !accessToken) {
-    return (
-      <div>
-        <h1>Not Connected</h1>
-        <p>Missing credentials, please go back and reconnect</p>
-      </div>
-    );
+  if (!storeInfoCall.ok){
+    storeName = "Failed to fetch store info"
+  }else {
+    const storeData = await storeInfoCall.json();
+    storeName = storeData.store_name;
   }
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Connected to store: {storeHash}</p>
-      <p>(Access token is present in cookies)</p>
-    </div>
-  );
+
+  return <DashboardClient storeName={storeName} />;
 }
