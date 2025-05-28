@@ -23,7 +23,7 @@ export default function OrdersMap() {
     }, []);
 
 	return (
-		<LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+		<LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY!}>
 			<GoogleMap
 				mapContainerStyle={{ width: '100vw', height: '100vh' }}
 				center={{ lat: 20, lng: 0 }}
