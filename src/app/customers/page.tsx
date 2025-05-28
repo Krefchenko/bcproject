@@ -2,42 +2,41 @@
 
 import { useEffect, useState, useRef } from 'react';
 
-type Product = {
+type Customer = {
   id: number;
   name: string;
-  price: number;
 };
 
-export default function ProductsClient() {
-  const [products, setProducts] = useState<Product[]>([]);
+export default function CustomersClient() {
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
   const loaderRef = useRef(null);
 
-  const fetchMoreProducts = async (pageNumber: number) => {
+  const fetchMoreCustomers = async (pageNumber: number) => {
     if (!hasMorePages) return;
 
     try {
-      const response = await fetch(`/api/products?page=${pageNumber}`);
-      const productData = await response.json();
+      const response = await fetch(`/api/customers?page=${pageNumber}`);
+      const customerData = await response.json();
 
-      const newProducts = productData.products;
-      const updatedProducts = products.concat(newProducts);
-      setProducts(updatedProducts);
+      const newCustomers = customerData.customers;
+      const updatedCustomers = customers.concat(newCustomers);
+      setCustomers(updatedCustomers);
 
       setCurrentPage(pageNumber);
 
-      if (pageNumber >= productData.totalPages || newProducts.length === 0) {
+      if (pageNumber >= customerData.totalPages || newCustomers.length === 0) {
         setHasMorePages(false);
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error fetching customers:', error);
     }
   };
 
-  // run this once to render the first batch of products and set page number as 1
+  // run this once to render the first batch of customers and set page number as 1
   useEffect(() => {
-    fetchMoreProducts(1);
+    fetchMoreCustomers(1);
   }, []);
 
 
@@ -54,7 +53,7 @@ export default function ProductsClient() {
 
     if (firstEntry.isIntersecting === true) {
       const nextPage = currentPage + 1;
-      fetchMoreProducts(nextPage);
+      fetchMoreCustomers(nextPage);
     }
     }, {
     // threshold: 1 means the div must be fully visible before the callback runs, this can be 0.0 -> 1.0
@@ -70,14 +69,14 @@ export default function ProductsClient() {
     };
   }, [currentPage, hasMorePages]);
 
-  // compile list of products, products is always the list of all products so this gets slower with each page
-  // could be improved by not iterating over products already displayed
+  // compile list of customers, customers is always the list of all customers so this gets slower with each page
+  // could be improved by not iterating over customers already displayed
   const listItems = [];
-  for (let i = 0; i < products.length; i++) {
-    const product = products[i];
+  for (let i = 0; i < customers.length; i++) {
+    const customer = customers[i];
     listItems.push(
-      <li key={product.id}>
-        {product.name} - ${product.price}
+      <li key={customer.id}>
+        {customer.name}
       </li>
     );
   }
@@ -85,7 +84,7 @@ export default function ProductsClient() {
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1>customers</h1>
       <ul>{listItems}</ul>
       <div ref={loaderRef} style={{ height: '100px' }} />
     </div>
