@@ -4,7 +4,9 @@ import { useEffect, useState, useRef } from 'react';
 
 type Customer = {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
+  email: string;
 };
 
 export default function CustomersClient() {
@@ -76,7 +78,7 @@ export default function CustomersClient() {
     const customer = customers[i];
     listItems.push(
       <li key={customer.id}>
-        {customer.name}
+        {customer.first_name} {customer.last_name} - {customer.email}
       </li>
     );
   }
