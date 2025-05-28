@@ -1,6 +1,8 @@
 ## Setup
 The best way to interact with this demo is through my Vercel deployment at https://bcproject-two.vercel.app/
+
 This is because the geolocation features won't work without my Google Maps token which is included as an environment variable
+
 You may still get some use out of the demo locally by running npm run dev and heading to http://localhost:3000
 
 ## Features
