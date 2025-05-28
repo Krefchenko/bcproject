@@ -13,7 +13,7 @@ export default function OrdersMap() {
 	const [orderCoords, setOrderCoords] = useState<OrderCoord[]>([]);
 
     async function loadCoords() {
-            const callRoute = await fetch('/analytics');
+            const callRoute = await fetch('/api/analytics');
             const data = await callRoute.json();
             setOrderCoords(data);
         }
