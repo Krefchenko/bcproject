@@ -21,7 +21,7 @@ body {
 }
 
 button {
-	background-color: #fff700;
+	background-color: #000000;
 	color: white;
 	border: none;
 	padding: 0.5rem 1rem;
@@ -40,4 +40,9 @@ ul li {
 
 ul li:last-child {
 	border-bottom: none;
+}
+
+input {
+	padding: 0.5rem;
+	border: 1px solid #000000;
 }
